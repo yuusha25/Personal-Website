@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function ImageEXP(props) {
     const containerRef = useRef(null);
+    const [isScrolling, setIsScrolling] = useState(false); // Untuk mendeteksi apakah user sedang berinteraksi
 
     useEffect(() => {
         const container = containerRef.current;
@@ -9,23 +10,35 @@ function ImageEXP(props) {
 
         let scrollAmount = 0;
         const isOdd = props.keyIndex % 2 !== 0; // Cek ganjil atau genap
+        let scrollInterval;
 
-        const scrollInterval = setInterval(() => {
-            // Jika ganjil, geser ke kiri; jika genap, geser ke kanan
-            scrollAmount += isOdd ? -2 : 2; // Kecepatan scroll (2px setiap interval)
-            container.scrollLeft = scrollAmount;
+        // Fungsi untuk memulai scrolling otomatis
+        const startAutoScroll = () => {
+            scrollInterval = setInterval(() => {
+                if (isScrolling) return; // Jangan scroll jika user sedang berinteraksi
 
-            // Reset ke awal jika sudah mencapai akhir atau awal
-            if (isOdd && scrollAmount <= 0) {
-                scrollAmount = container.scrollWidth - container.clientWidth;
-            } else if (!isOdd && scrollAmount >= container.scrollWidth - container.clientWidth) {
-                scrollAmount = 0;
-            }
-        }, 30); // Interval waktu (30ms)
+                scrollAmount += isOdd ? -2 : 2; // Kecepatan scroll (2px setiap interval)
+                container.scrollLeft = scrollAmount;
+
+                // Reset ke awal jika sudah mencapai akhir atau awal
+                if (isOdd && scrollAmount <= 0) {
+                    scrollAmount = container.scrollWidth - container.clientWidth;
+                } else if (!isOdd && scrollAmount >= container.scrollWidth - container.clientWidth) {
+                    scrollAmount = 0;
+                }
+            }, 30); // Interval waktu (30ms)
+        };
+
+        // Mulai scrolling otomatis
+        startAutoScroll();
 
         // Membersihkan interval saat komponen di-unmount
         return () => clearInterval(scrollInterval);
-    }, [props.keyIndex]); // Tambahkan dependency untuk mengacu ke keyIndex
+    }, [props.keyIndex, isScrolling]); // Tambahkan dependency isScrolling untuk menghentikan saat interaksi
+
+    // Event handlers untuk interaksi pengguna
+    const handleTouchStart = () => setIsScrolling(true); // Mulai interaksi
+    const handleTouchEnd = () => setIsScrolling(false); // Akhiri interaksi
 
     return (
         <>
@@ -33,15 +46,17 @@ function ImageEXP(props) {
                 ref={containerRef}
                 className="overflow-x-auto flex gap-4 py-4 no-scrollbar"
                 style={{ scrollBehavior: "smooth", whiteSpace: "nowrap" }}
+                onTouchStart={handleTouchStart} // Menangkap interaksi pengguna
+                onTouchEnd={handleTouchEnd}
+                onMouseEnter={handleTouchStart} // Untuk desktop, hentikan scroll otomatis saat mouse masuk
+                onMouseLeave={handleTouchEnd}  // Lanjutkan scroll otomatis saat mouse keluar
             >
                 {props.images.map((image, index) => (
-                    <div> 
-                        {/* <p>halo halo</p> */}
-                    <img
-                        key={index}
-                        src={image}
-                        alt=""
-                        className="h-[200px] md:h-[300px] w-auto max-w-[500px] object-contain"
+                    <div key={index}> 
+                        <img
+                            src={image}
+                            alt=""
+                            className="h-[200px] md:h-[300px] w-auto max-w-[500px] object-contain"
                         />
                     </div>
                 ))}
