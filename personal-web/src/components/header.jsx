@@ -8,7 +8,7 @@ function Header() {
                 <img
                     src={backgroundHead}
                     alt="imagenya"
-                    className="h-[220px] w-full mx-auto"
+                    className="h-[160px] md:h-[220px] w-full mx-auto"
                 />
 
                 {/* Gambar profil berbentuk lingkaran */}
@@ -16,7 +16,7 @@ function Header() {
                 <img
                     src={profil}
                     alt=""
-                    className="border-4 md:ml-20 lg:ml-28 md:mt-24 lg:mt-24 relative md:absolute lg:absolute w-[200px] md:w-[260px] lg:w-[270px] rounded-full mx-auto"
+                    className="mt-4 border-4 md:ml-20 lg:ml-28 md:mt-24 relative md:absolute lg:absolute w-[200px] md:w-[260px] lg:w-[270px] rounded-full mx-auto"
                     />  
                 {/* Gambar latar belakang */}
             </div>
