@@ -36,12 +36,12 @@ function ImageEXP(props) {
             >
                 {props.images.map((image, index) => (
                     <div> 
-                        <p>halo halo</p>
+                        {/* <p>halo halo</p> */}
                     <img
                         key={index}
                         src={image}
                         alt=""
-                        className="h-[300px] w-auto max-w-[500px] object-contain"
+                        className="h-[200px] md:h-[300px] w-auto max-w-[500px] object-contain"
                         />
                     </div>
                 ))}

@@ -7,8 +7,8 @@ import Traveling from './components/traveling'
 function App() {
   return (
     <>
-      <div className='pr-24 pl-24 bg-gray-100'>
-        <div className='h-[380px]'>
+      <div className='pr-4 pl-4 md:pr-20  md:pl-20   bg-gray-100'>
+        <div className='md:h-[380px]'> 
           <Headernya />
         </div>
         <Biodata />  
