@@ -49,7 +49,7 @@ function ImageEXP(props) {
                     <img
                         src={image}
                         alt=""
-                        className="h-[200px] md:h-[300px] w-auto max-w-[500px] object-contain"
+                        className="h-[100px] md:h-[200px] w-auto max-w-[500px] object-contain"
                     />
                 </div>
             ))}
