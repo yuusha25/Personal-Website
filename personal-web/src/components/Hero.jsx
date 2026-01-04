@@ -30,7 +30,7 @@ export default function Hero({ mousePos }) {
                     <h1 className="text-6xl md:text-7xl font-bold leading-tight">
                         <span className="block">Hello, I&apos;m</span>
                         <span className="block bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient-x bg-300">
-                            Fullstack Dev
+                            Razky Ageng Syahputra
                         </span>
                     </h1>
 
